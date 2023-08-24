@@ -1,0 +1,20 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+jobs:
+- job: SendTeamsNotification
+  steps:
+  - powershell: |
+      $webhookURL = "https://accenture.webhook.office.com/webhookb2/5bc2940c-da9c-47ca-8882-653f0e967a3b@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/468470fdc31246ad912aeacdd77ec253/687f22a9-6626-4b30-969c-adbbf2fde363"
+      $message = "hi <at>pawani.singh@accenture.com</at>, here"
+      $body = @{
+        text = $message
+      } | ConvertTo-Json
+
+      $response = Invoke-RestMethod -Uri $webhookURL -Method Post -Body $body -ContentType 'application/json'
+
+      Write-Host "Teams notification response: $($response.StatusCode)"
+    displayName: 'Send Notification to Teams'
