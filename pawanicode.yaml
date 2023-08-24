@@ -1,0 +1,20 @@
+trigger:
+- master  # You can set your preferred trigger branch here
+
+pool:
+  vmImage: 'windows-latest'  # Use the appropriate image for your project
+
+jobs:
+- job: SendTeamsNotification
+  steps:
+  - powershell: |
+      $webhookURL = "<YOUR_WEBHOOK_URL>"
+      $message = "Your message here"
+      $body = @{
+        text = $message
+      } | ConvertTo-Json
+
+      $response = Invoke-RestMethod -Uri $webhookURL -Method Post -Body $body -ContentType 'application/json'
+
+      Write-Host "Teams notification response: $($response.StatusCode)"
+    displayName: 'Send Notification to Teams'
