@@ -14,7 +14,7 @@ steps:
     $webhookUrl = "https://accenture.webhook.office.com/webhookb2/5bc2940c-da9c-47ca-8882-653f0e967a3b@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/468470fdc31246ad912aeacdd77ec253/687f22a9-6626-4b30-969c-adbbf2fde363"
     
     $message = @{
-      text = "Hello <at>Singh,Pawani</at>, please take a look at this message!"
+      text = "Hello <at>pawani.singh</at>, please take a look at this message!"
     }
     
     $jsonPayload = $message | ConvertTo-Json
