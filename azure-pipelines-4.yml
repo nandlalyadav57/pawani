@@ -21,9 +21,9 @@ steps:
             "entities": [
                 {
                     "type": "mention",
-                    "text": "<at>pawanisingh</at>"
+                    "text": "<at>pawanisingh</at>",
                     "mentioned":{
-                      "id": "pawani.singh@accenture.com"
+                      "id": "pawani.singh@accenture.com",
                       "name": "pawanisingh"
                     }
                 }
