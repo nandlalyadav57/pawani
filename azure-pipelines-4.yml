@@ -1,0 +1,42 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- script: |
+    $webhookUrl = "https://accenture.webhook.office.com/webhookb2/5bc2940c-da9c-47ca-8882-653f0e967a3b@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/468470fdc31246ad912aeacdd77ec253/687f22a9-6626-4b30-969c-adbbf2fde363"
+    $adaptiveCard = @"
+    {
+        "type": "AdaptiveCard",
+        "version": "1.0",
+        "body": [
+            {
+                "type": "TextBlock",
+                "text": "Hello pawani, you've been tagged!"
+            }
+        ],
+        "msteams": {
+            "entities": [
+                {
+                    "type": "mention",
+                    "text": "<at>pawanisingh</at>"
+                    "mentioned":{
+                      "id": "pawani.singh@accenture.com"
+                      "name": "pawanisingh"
+                    }
+                }
+            ]
+        }
+    }
+    "@
+
+    $headers = @{
+        "Content-Type" = "application/json"
+    }
+
+    Invoke-RestMethod -Uri $webhookUrl -Method Post -Body $adaptiveCard -Headers $headers
+  displayName: 'Send Teams Notification'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
