@@ -21,7 +21,7 @@ steps:
             "entities": [
                 {
                     "type": "mention",
-                    "text": "<at>pawanisingh</at>"
+                    "text": "<at>pawani.singh@accenture.com</at>"
                     
                 }
             ]
@@ -35,5 +35,4 @@ steps:
 
     Invoke-RestMethod -Uri $webhookUrl -Method Post -Body $adaptiveCard -Headers $headers
   displayName: 'Send Teams Notification'
-  env:
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+  
