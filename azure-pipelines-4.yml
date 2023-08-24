@@ -7,17 +7,25 @@ pool:
 steps:
 - powershell: |
     $webhookUrl = "https://accenture.webhook.office.com/webhookb2/5bc2940c-da9c-47ca-8882-653f0e967a3b@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/468470fdc31246ad912aeacdd77ec253/687f22a9-6626-4b30-969c-adbbf2fde363"
-    $taggedUser = "<at>pawani.singh@accenture.com</at>"
+    $taggedUserId = "pawani.singh@accenture.com"
     
-    $message = "Hello $taggedUser, you've been tagged."
-    
-    $body = @{
-        "text" = $message
+    $adaptiveCard = @{
+        "@type" = "MessageCard";
+        "@context" = "http://schema.org/extensions";
+        "themeColor" = "0072C6";
+        "summary" = "Tagging Example";
+        "sections" = @(
+            @{
+                "activityTitle" = "Tagged User";
+                "activitySubtitle" = "You've been tagged!";
+                "text" = "Hello <at>$taggedUserId</at>!";
+            }
+        )
     }
 
     $headers = @{
         "Content-Type" = "application/json"
     }
 
-    Invoke-RestMethod -Uri $webhookUrl -Method Post -Body ($body | ConvertTo-Json) -Headers $headers
+    Invoke-RestMethod -Uri $webhookUrl -Method Post -Body ($adaptiveCard | ConvertTo-Json -Depth 10) -Headers $headers
   displayName: 'Tag Someone in Teams'
